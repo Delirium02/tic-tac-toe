@@ -43,7 +43,15 @@ blocks.forEach((block) => {
       e.target.style.alignItems = "center";
 
       switchTurn();
-    }
+
+      if (win()) {
+        switchTurn();
+        setTimeout(() => {
+          alert(`${currentPlayer.name} wins!`);
+        }
+        , 10);
+      };
+    };
   });
 });
 
@@ -53,7 +61,19 @@ const winConditions = [
   [0, 4, 8], [2, 4, 6]             // Diagonals
 ];
 
-//const win = 
+const win = () => {
+  for(let condition of winConditions) {
+    const [a, b, c] = condition;
+    if (gameBoard.board[a] !== "" && gameBoard.board[a] === gameBoard.board[b] && gameBoard.board[a] === gameBoard.board[c]) {
+      return true;
+    };   
+  };
+};
+
+const resetGame = () => {
+  // do this next
+}
+
 
 // const playButton = document.querySelector(".play-button"); --> Not used currently
 
