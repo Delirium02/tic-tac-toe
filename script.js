@@ -50,6 +50,8 @@ blocks.forEach((block) => {
           alert(`${currentPlayer.name} wins!`);
         }
         , 10);
+
+      return;
       };
     };
   });
@@ -64,16 +66,32 @@ const winConditions = [
 const win = () => {
   for(let condition of winConditions) {
     const [a, b, c] = condition;
-    if (gameBoard.board[a] !== "" && gameBoard.board[a] === gameBoard.board[b] && gameBoard.board[a] === gameBoard.board[c]) {
+
+    const squareA = gameBoard.board[a];
+    const squareB = gameBoard.board[b];
+    const squareC = gameBoard.board[c];
+
+    if (squareA === "") continue;
+
+    if (squareA === squareB && squareA === squareC) {
       return true;
     };   
   };
 };
 
-const resetGame = () => {
-  // do this next
+const resetGame = document.querySelector(".reset-button");
+
+const reset = () => {
+  gameBoard.board = ["", "", "", "", "", "", "", "", ""];
+  currentPlayer = player1;
+
+  // Clear content
+  blocks.forEach((block) => {
+    block.textContent = "";
+  })
 }
 
+resetGame.addEventListener("click", () => reset());
 
 // const playButton = document.querySelector(".play-button"); --> Not used currently
 
