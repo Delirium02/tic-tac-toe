@@ -1,3 +1,9 @@
+const playButton = document.querySelector(".play-button");
+
+const resetButton = document.querySelector(".reset-button");
+
+const gameGrid = document.querySelector("#grid");
+gameGrid.style.display = "none";
 
 const gameBoard = {
     board: ["", "", "", "", "", "", "", "", ""],
@@ -79,23 +85,18 @@ const win = () => {
   };
 };
 
-const resetGame = document.querySelector(".reset-button");
-
-const reset = () => {
+const gameReset = () => {
   gameBoard.board = ["", "", "", "", "", "", "", "", ""];
   currentPlayer = player1;
 
   // Clear content
   blocks.forEach((block) => {
     block.textContent = "";
-  })
-}
+  });
+};
 
-resetGame.addEventListener("click", () => reset());
+resetButton.addEventListener("click", () => gameReset());
 
-// const playButton = document.querySelector(".play-button"); --> Not used currently
-
-const gameFlow = {
-
-}
-
+playButton.addEventListener("click", () => {
+  gameGrid.style.display = "grid";
+});
