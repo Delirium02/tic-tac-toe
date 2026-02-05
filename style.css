@@ -21,9 +21,32 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100vw;
     height: 100vh;
     background-color: #bcbcbc;
+}
+
+.title {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #333;
+}
+
+input {
+    padding: 10px;
+    border: none;
+}
+
+.win-message {
+    font-size: 24px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.win-message:hover {
+    color: #4CAF50;
+    cursor: default;
 }
 
 .game-grid {
@@ -35,4 +58,28 @@ body {
 
 .block {
     border: 2px solid black;
+}
+
+button {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.reset-button {
+    margin-top: 20px;
 }
