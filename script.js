@@ -3,9 +3,12 @@ const resetButton = document.querySelector(".reset-button");
 resetButton.style.display = "none";
 
 const title = document.querySelector(".title");
+const playerNameInput = document.querySelectorAll(".name-input")
 const winMessage = document.querySelector(".win-message");
 const gameGrid = document.querySelector("#grid");
 gameGrid.style.display = "none";
+
+let gameOver = false;
 
 const gameBoard = {
   board: ["", "", "", "", "", "", "", "", ""],
@@ -21,7 +24,7 @@ const createPlayer = (name, marker) => {
   };
 };
 
-const player1 = createPlayer("Leo", "X");
+const player1 = createPlayer(playerNameInput[0].value, "X");
 const player2 = createPlayer("Opp", "O");
 
 let currentPlayer = player1;
@@ -38,17 +41,12 @@ const blocks = document.querySelectorAll(".block");
 
 blocks.forEach((block) => {
   block.addEventListener("click", (e) => {
+    if (gameOver) return;
     const index = e.target.dataset.index;
 
     if (gameBoard.board[index] == "") {
       gameBoard.placeMark(index, currentPlayer.marker);
-
       e.target.textContent = currentPlayer.marker;
-
-      e.target.style.fontSize = "48px";
-      e.target.style.display = "flex";
-      e.target.style.justifyContent = "center";
-      e.target.style.alignItems = "center";
 
       switchTurn();
 
@@ -56,6 +54,16 @@ blocks.forEach((block) => {
         switchTurn();
         winMessage.textContent = `${currentPlayer.name} wins!`;
 
+        const winningCombo = win();
+
+        winningCombo.forEach((index, i) =>
+          setTimeout(() => {
+            blocks[index].style.backgroundColor = "#00bb67";
+            blocks[index].style.color = "white";
+          }, i * 200),
+        );
+        gameOver = true;
+        
         return;
       } else if (!gameBoard.board.includes("")) {
         winMessage.textContent = "It's a tie!";
@@ -89,11 +97,13 @@ const win = () => {
     if (squareA === "") continue;
 
     if (squareA === squareB && squareA === squareC) {
-      return true;
-    }
-  }
+      return condition;
+    };
+  };
+  return null;
 };
 
+// Reset game
 const gameReset = () => {
   gameBoard.board = ["", "", "", "", "", "", "", "", ""];
   currentPlayer = player1;
@@ -101,13 +111,17 @@ const gameReset = () => {
   // Clear content
   blocks.forEach((block) => {
     block.textContent = "";
+    block.style.backgroundColor = "";
+    block.style.color = "";
   });
 
   winMessage.textContent = "";
+  gameOver = false;
 };
 
 resetButton.addEventListener("click", () => gameReset());
 
+// Play button function
 playButton.addEventListener("click", () => {
   gameGrid.style.opacity = "0";
   gameGrid.style.display = "grid";
@@ -119,4 +133,8 @@ playButton.addEventListener("click", () => {
   playButton.style.display = "none";
   title.textContent = "Tic Tac Toe";
   resetButton.style.display = "inline-block";
+
+  playerNameInput.forEach((inputField) => {
+    inputField.style.display = "none";
+  });
 });
