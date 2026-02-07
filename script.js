@@ -3,7 +3,7 @@ const resetButton = document.querySelector(".reset-button");
 resetButton.style.display = "none";
 
 const title = document.querySelector(".title");
-const playerNameInput = document.querySelectorAll(".name-input")
+const playerNameInput = document.querySelectorAll(".name-input");
 const winMessage = document.querySelector(".win-message");
 const gameGrid = document.querySelector("#grid");
 gameGrid.style.display = "none";
@@ -24,10 +24,10 @@ const createPlayer = (name, marker) => {
   };
 };
 
-const player1 = createPlayer(playerNameInput[0].value, "X");
-const player2 = createPlayer("Opp", "O");
+let player1;
+let player2;
 
-let currentPlayer = player1;
+let currentPlayer;
 
 function switchTurn() {
   if (currentPlayer == player1) {
@@ -48,6 +48,8 @@ blocks.forEach((block) => {
       gameBoard.placeMark(index, currentPlayer.marker);
       e.target.textContent = currentPlayer.marker;
 
+      e.target.style.color = "black";
+
       switchTurn();
 
       if (win()) {
@@ -63,7 +65,7 @@ blocks.forEach((block) => {
           }, i * 200),
         );
         gameOver = true;
-        
+
         return;
       } else if (!gameBoard.board.includes("")) {
         winMessage.textContent = "It's a tie!";
@@ -98,8 +100,8 @@ const win = () => {
 
     if (squareA === squareB && squareA === squareC) {
       return condition;
-    };
-  };
+    }
+  }
   return null;
 };
 
@@ -137,4 +139,12 @@ playButton.addEventListener("click", () => {
   playerNameInput.forEach((inputField) => {
     inputField.style.display = "none";
   });
+
+  const p1Name = playerNameInput[0].value || "X";
+  const p2Name = playerNameInput[1].value || "O";
+
+  player1 = createPlayer(p1Name, "X");
+  player2 = createPlayer(p2Name, "O");
+
+  currentPlayer = player1;
 });
